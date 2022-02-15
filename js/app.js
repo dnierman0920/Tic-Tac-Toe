@@ -3,15 +3,8 @@ console.log("we connected!!!")
 // Declaring global variables connected to html elements
 const body = document.querySelector("body")
 const allBoxes = document.querySelectorAll(".box")
-// const a1  = document.querySelector("a-1") 
-// const b1  = document.querySelector("b-1")
-// const c1  = document.querySelector("c-1")
-// const a2  = document.querySelector("a-2")
-// const b2  = document.querySelector("b-2")
-// const c2  = document.querySelector("c-2")
-// const a3  = document.querySelector("a-3")
-// const b3  = document.querySelector("b-3")
-// const a3  = document.querySelector("c-3")
+const message = document.querySelector("#message")
+
 
 // create a global gameboard object
 const gameBoard = {
@@ -36,10 +29,6 @@ const playerObject = {
 
     //create method for a player to select a box
     changeBox (boxId){
-        if(gameBoard[boxId]){
-            alert(`Box ${box} is already selected, please select a different box`)
-            return console.log(`Box ${box} is already selected, please select a different box`)
-        }
         console.log(`Box ${boxId} has been selected by ${this.playerName} and is now ${this.sign}`)
         gameBoard[boxId] = this.sign;
         document.querySelector('#'+boxId).innerText = this.sign;
@@ -129,7 +118,10 @@ const freezeGameboard = () => {
 // selects a square
 const selectBox = (boxId) => {
     // check to make sure the box is not already selected
-    if(gameBoard[boxId]) return console.log(`${gameBoard[boxId]} is already chosen, please select a different box`)
+    if(gameBoard[boxId]){
+        alert(`${gameBoard[boxId]} is already chosen, please select a different box`)
+        return console.log(`${gameBoard[boxId]} is already chosen, please select a different box`)
+    } 
     // create ternary operator that checks whose turn it is and then
     // selects the box with the correct player dependent on whose
     // turn it is

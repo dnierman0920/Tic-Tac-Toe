@@ -28,6 +28,11 @@ body{
 
 }
 
+#message{
+    margin-top: 20px;
+    font-size: 20px;
+}
+
 #reset{
     height: 50px;
     width: 20%;
