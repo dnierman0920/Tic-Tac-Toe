@@ -79,36 +79,35 @@ const switchTurns = () => {
 //create function to check for 3 in a row
 const gameboardWinner = () =>{
     console.log("checking for a winner thru function gamboardWinner")
-    if (gameBoard[a1] === gameBoard[a2] === gameBoard[a3]){
+    if (gameBoard.a1 === gameBoard.a2 && gameBoard.a1=== gameBoard.a3){
         //column A
-        console.log("column A")
         return gameBoard.a1
     }
-    else if(gameBoard.b1 === gameBoard.b2 === gameBoard.b3){
+    else if(gameBoard.b1 === gameBoard.b2  && gameBoard.b1 === gameBoard.b3){
         //column B
         return gameBoard.b1
     }
-    else if(gameBoard.c1 === gameBoard.c2 === gameBoard.c3){
+    else if(gameBoard.c1 === gameBoard.c2  &&  gameBoard.c1 === gameBoard.c3){
         //column c
         return gameBoard.c1
     }
-    else if(gameBoard.a1 === gameBoard.b1 === gameBoard.c1){
+    else if(gameBoard.a1 === gameBoard.b1  && gameBoard.a1 === gameBoard.c1){
         //row 1
         return gameBoard.a1
     }
-    else if(gameBoard.a2 === gameBoard.b2 === gameBoard.c2){
+    else if(gameBoard.a2 === gameBoard.b2  && gameBoard.a2 === gameBoard.c2){
         //row 2
         return gameBoard.a2
     }
-    else if(gameBoard.a3 === gameBoard.b3 === gameBoard.c3){
+    else if(gameBoard.a3 === gameBoard.b3  && gameBoard.a3 === gameBoard.c3){
         //row 3
         return gameBoard.a3
     }
-    else if (gameBoard.a1 === gameBoard.b2 === gameBoard.c3){
+    else if (gameBoard.a1 === gameBoard.b2  && gameBoard.a1 === gameBoard.c3 ){
         // top left corner diagonal to bottom right
         return gameBoard.a1
     }
-    else if (gameBoard.c1 === gameBoard.b2 ===gameBoard.a3){
+    else if (gameBoard.c1 === gameBoard.b2 && gameBoard.c1 ===  gameBoard.a3){
         // top right corner diagonal to bottom left
         return gameBoard.c1
     }
@@ -140,7 +139,7 @@ const selectBox = (boxId) => {
     if(player1.turnCounter >= 3 || player2.turnCounter >= 3 ) {
         //check if there is a winner
         if(gameboardWinner()){
-            alert(`${gameboardWinner} has won! please select "Reset" below to start a new game`)
+            console.log(`${gameboardWinner()} has won! please select "Reset" below to start a new game`)
             freezeGameboard()
         } 
     }
