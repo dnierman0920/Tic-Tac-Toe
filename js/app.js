@@ -1,5 +1,3 @@
-// set global value for winner
-let winner = false;
 
 // Declaring global variables connected to html elements
 const body = document.querySelector("body")
@@ -7,20 +5,10 @@ const allBoxes = document.querySelectorAll(".box")
 const message = document.querySelector("#message")
 const reset = document.querySelector('#reset')
 
+//******************************** GLOBAL GAMEBOARD VARIABLES, LISTS AND WINNING COMBINATIONS  ********************************
+let winner = false; 
 
-
-//******************************** GLOBAL GAMEBOARD AND WINNING COMBINATIONS  ********************************
-const gameboard = {
-    a1: false,
-    b1: false,
-    c1: false,
-    a2: false,
-    b2: false,
-    c2: false,
-    a3: false,
-    b3: false,
-    c3: false,
-}
+const gameboard = ['a1','b1','c1','a2','b2','c2','a3','b3','c3'] // have these act as keys that can be iterated through to reference each of the gameboard squares
 
 const winningCombinations = 
     [
@@ -44,27 +32,23 @@ const playerObject = {
     turnCounter: 0,
 
     //create method for a player to select a box
-    changeBox (boxId){
+    changeSquare (square){
         //console.log(`Box ${boxId} has been selected by ${this.playerName} and is now ${this.sign}`)
-        gameboard[boxId] = this.sign;
-        document.querySelector('#'+boxId).innerText = this.sign;
+        //gameboard[square] = this.sign;
+        document.querySelector('#'+square).innerText = this.sign;
         this.turnCounter++;
-        console.log(gameboard)
     }
 }
-
 
 // ******************************** CREATE INSTANCES OF PLAYER OBJECT PLAYER 1 & PLAYER 2 ******************************
 
 //create instances of player objects & set symbols
-//create player 1
-const player1 = Object.create(playerObject)
+const player1 = Object.create(playerObject) //create player 1
 player1.playerName = 'player1'
 player1.sign = 'X'
 player1.turn = true // allow player 1 to go first
 
-//create player 2
-const player2 = Object.create(playerObject)
+const player2 = Object.create(playerObject) //create player 2
 player2.playerName = 'player2'
 player2.sign = 'O'
 
@@ -86,11 +70,12 @@ const switchTurns = () => {
 
 const checkWinner = (playerSign) => {
     for (combo in winningCombinations){
-        if(playerSign === gameboard[winningCombinations[combo][0]] &&
-           playerSign === gameboard[winningCombinations[combo][1]] &&
-           playerSign === gameboard[winningCombinations[combo][2]])
+        if(playerSign === document.getElementById([winningCombinations[combo][0]]).innerText &&
+           playerSign === document.getElementById([winningCombinations[combo][1]]).innerText &&
+           playerSign === document.getElementById([winningCombinations[combo][2]]).innerText
+        )
            {
-                freezeGameboard(true)
+                freezeGameboard()
                 winner = playerSign
                 return true
             }
@@ -99,22 +84,13 @@ const checkWinner = (playerSign) => {
 }
 
 // create a function that will prevent a user from selecting any squares after that has been a winner
-const freezeGameboard = (boolean) => {
-    if(boolean){
-        for (square in gameboard){
-            if(document.querySelector('#'+square).innerText === "") document.querySelector('#'+square).innerText = "-" // itterate through each square and set it to true, so it cannot be clicked TESTING TESTING TESTING
-        }
-        console.log('gameboard', gameboard)
+const freezeGameboard = () => {
+        gameboard.forEach( square => {
+            if (document.querySelector('#'+square).innerText === ""){
+                document.querySelector('#'+square).innerText = "-" // set the square to "-" if its blank to indicate the game is over to users
+            } 
+        })
     }
-    else {
-        for (square in gameboard){
-            gameboard[square] = false; // itterate through each square and set it to empty, so it cannot be clicked
-            document.querySelector('#'+square).innerText = ""
-            winner = false;
-            //console.log('erasing content from, ', square)
-        }
-    }
-}
 
 // create a function that will be the 'entry point to js' when a player selects a square
 const selectBox = (square) => {
@@ -132,7 +108,7 @@ const selectBox = (square) => {
     
     // create ternary operator that checks whose turn it is and then
     // selects the box with the correct player dependent on whose turn it is
-    player1.turn ? player1.changeBox(square) : player2.changeBox(square)
+    player1.turn ? player1.changeSquare(square) : player2.changeSquare(square)
     //check if there is a winner
     let playerSign;
     player1.turn ? playerSign = player1.sign : playerSign = player2.sign
@@ -149,6 +125,14 @@ const selectBox = (square) => {
     switchTurns() //change turns after the box is filled in with corresponding player symbol      
 }
 
+// create a function to reset the gameboard    
+const resetGameboard = () => {
+    gameboard.forEach( square => {  
+        document.querySelector('#'+square).innerText = "" // reset the board by setting all the values to empty for a new game
+        winner = false;
+    })
+}
+
 
 // **********************************************  CREATE EVENT LISTENERS ****************************************************
 
@@ -160,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     reset.addEventListener('click', function()  {
-        freezeGameboard(false)
+        resetGameboard()
     })
 })
 
