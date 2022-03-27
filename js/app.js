@@ -78,6 +78,18 @@ const checkWinner = (playerSign) => {
                 return true
             }
     }
+    // Add condition if there is a tie (this will occur when all of the gameboard places have a playerSign)
+    // Loop through all the keys on the gameboard and check to see if any square have not been chosen (if not it is a tie)
+    gameboardKeys.forEach( key => {
+        if(document.getElementById(key).innerText === ""){
+            return false
+        }
+        else{
+            message.innerText = "CAT'S GAME.. Click RESET to play a new game"
+        }
+
+    })
+    
     return false
 }
 
@@ -112,7 +124,7 @@ const selectBox = (key) => {
     player1.turn ? playerSign = player1.sign : playerSign = player2.sign
 
     //check for winner and if no winner switch turns
-    checkWinner(playerSign)
+    console.log(checkWinner(playerSign))
 
     if('X' === winner){
         message.innerText = 'the winner is X'
